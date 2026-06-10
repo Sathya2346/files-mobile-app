@@ -9,7 +9,7 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.balakanna.MobileApp",
+      "bundleIdentifier": "com.app.MobileApp",
       "infoPlist": {
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/images/android-icon-foreground.png"
       },
       "permissions": ["READ_EXTERNAL_STORAGE","WRITE_EXTERNAL_STORAGE","RECORD_AUDIO"],
-      "package": "com.balakanna.MobileApp"
+      "package": "com.app.MobileApp"
     },
     "plugins": [
       "expo-router",
