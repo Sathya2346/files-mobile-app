@@ -1,5 +1,10 @@
 // constants/apiConfig.ts
-export const API_HOST = "http://192.168.1.18:8000/api";
+const isProduction = !__DEV__;
+
+// NOTE: Replace the production URL below with your actual Render URL after deploying your backend!
+export const API_HOST = isProduction 
+  ? "https://django-files-backend.onrender.com/api" 
+  : "http://192.168.1.18:8000/api";
 
 
 export const endpoints = {

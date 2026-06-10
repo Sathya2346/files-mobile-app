@@ -24,16 +24,16 @@ export default function Explore() {
     { name: "PDF to Word", desc: "Convert your PDF documents to editable Word files effortlessly.", icon: require("../assets/images/pdf_word.png"), page: "/PdfToWordScreen" },
     { name: "Word to PDF", desc: "Convert your Word documents to PDF format quickly and easily.", icon: require("../assets/images/word_pdf.png"), page: "/WordToPdfScreen" },
     { name: "Image to PDF", desc: "Convert your JPG images into a single PDF file quickly and easily.", icon: require("../assets/images/img_pdf.png"), page: "/ImageToPdfScreen" },
-    { name: "PDF to Image", desc: "Convert your PDF Files into Image format effortlessly.", icon: require("../assets/images/pdf_img.png"), page: "/PdfToImageScreen" },
+    { name: "PDF to Image", desc: "Convert your PDF Files into Image format effortlessly.", icon: require("../assets/images/pdf_img.png"), page: "/PdfToImagesScreen" },
     { name: "Image Compress", desc: "Reduce the size of your Images without losing quality—quick and efficient", icon: require("../assets/images/img_compress.jpg"), page: "/ImageCompressScreen" },
     { name: "Protect PDF", desc: "Secure your PDF with a password to protect your documents from unauthorized access.", icon: require("../assets/images/protect.png"), page: "/ProtectPdfScreen" },
     { name: "Unlock PDF", desc: "Unlock password-protected PDFs and access your content with ease.", icon: require("../assets/images/unlock.png"), page: "/UnlockPdfScreen" },
-    { name: "Add Watermark", desc: "Add custom watermarks to your PDFs for branding or protection with ease.", icon: require("../assets/images/watermark.png"), page: "/WatermarkPdfScreen" },
+    { name: "Add Watermark", desc: "Add custom watermarks to your PDFs for branding or protection with ease.", icon: require("../assets/images/watermark.png"), page: "/PdfWatermarkScreen" },
     { name: "PPT to PDF", desc: "Convert your PowerPoint presentations to PDF format in just a few clicks.", icon: require("../assets/images/ppt_pdf.png"), page: "/PptToPdfScreen" },
     { name: "PDF to PPT", desc: "Transform your PDF into a fully editable PowerPoint presentation in seconds.", icon: require("../assets/images/pdf_ppt.png"), page: "/PdfToPptScreen" },
     { name: "PDF to Excel", desc: "Convert your PDF data into an editable Excel spreadsheet with ease.", icon: require("../assets/images/pdf_excel.png"), page: "/PdfToExcelScreen" },
     { name: "Excel to PDF", desc: "Convert your Excel files to PDF format in just a few clicks.", icon: require("../assets/images/excel_pdf.png"), page: "/ExcelToPdfScreen" },
-    { name: "Sign PDF", desc: "Add your signature to PDF documents securely and effortlessly.", icon: require("../assets/images/sign.png"), page: "/SignPdfScreen" },
+    { name: "Sign PDF", desc: "Add your signature to PDF documents securely and effortlessly.", icon: require("../assets/images/sign.png"), page: "/PdfSignScreen" },
   ];
 
   // Filter tools based on searchQuery
@@ -61,7 +61,7 @@ export default function Explore() {
           value={searchQuery} // bind state
           onChangeText={setSearchQuery} // update state
         />
-        <Ionicons name="mic-outline" size={22} color="#777" />
+        {/* <Ionicons name="mic-outline" size={22} color="#777" /> */}
       </View>
 
       {/* Tools List */}

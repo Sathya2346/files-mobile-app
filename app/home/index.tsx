@@ -73,7 +73,7 @@ export default function Home() {
               onChangeText={setSearchQuery}
             />
             <TouchableOpacity>
-              <Ionicons name="mic-outline" size={20} color="#999" />
+              {/* <Ionicons name="mic-outline" size={20} color="#999" /> */}
             </TouchableOpacity>
           </View>
         </View>

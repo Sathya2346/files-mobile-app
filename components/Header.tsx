@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet, StatusBar } from "react-native";
+import { View, Text, Image, StyleSheet, StatusBar, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
 
 export default function Header() {
   const [userName, setUserName] = useState("User");
@@ -37,15 +38,17 @@ export default function Header() {
 
         {/* PROFILE IMAGE */}
         <View style={styles.profileSection}>
-          {userImage ? (
-            <Image source={{ uri: userImage }} style={styles.profileImage} />
-          ) : (
-            <View style={styles.profileImagePlaceholder}>
-              <Text style={styles.profileInitial}>
-                {userName.charAt(0).toUpperCase()}
-              </Text>
-            </View>
-          )}
+          <TouchableOpacity onPress={() => router.push("/Profile")}>
+            {userImage ? (
+              <Image source={{ uri: userImage }} style={styles.profileImage} />
+            ) : (
+              <View style={styles.profileImagePlaceholder}>
+                <Text style={styles.profileInitial}>
+                  {userName.charAt(0).toUpperCase()}
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
         </View>
       </View>
     </>

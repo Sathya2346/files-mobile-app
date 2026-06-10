@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -89,16 +91,21 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mobile_app',
-        'USER': 'root',
-        'PASSWORD': '1151',
-        'HOST': 'localhost',
-        'port': '3306'
+if os.environ.get('DATABASE_URL'):
+    DATABASES = {
+        'default': dj_database_url.config(conn_max_age=600)
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'mobile_app',
+            'USER': 'root',
+            'PASSWORD': '',
+            'HOST': '127.0.0.1',
+            'PORT': '3306'
+        }
+    }
 
 
 # Password validation
@@ -156,8 +163,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'abalakannan2001@gmail.com'
-EMAIL_HOST_PASSWORD = 'vfrw ockc ipva lzch'
-DEFAULT_FROM_EMAIL = 'abalakannan2001@gmail.com'
-ADMIN_EMAIL = 'balamakesh2001@gmail.com'
-ADMIN_PANEL_URL = 'http://localhost:8000/admin/'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'abalakannan2001@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'vfrw ockc ipva lzch')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'abalakannan2001@gmail.com')
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'balamakesh2001@gmail.com')
+ADMIN_PANEL_URL = os.environ.get('ADMIN_PANEL_URL', 'http://localhost:8000/admin/')

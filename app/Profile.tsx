@@ -39,53 +39,55 @@ export default function ProfileScreen() {
     loadUserProfile();
   }, []);
 
-  const loadUserProfile = async () => {
-    try {
-      setLoading(true);
-      const token = await AsyncStorage.getItem("authToken");
-      const userId = await AsyncStorage.getItem("userId");
+const loadUserProfile = async () => {
+  try {
+    setLoading(true);
 
-      console.log("=== PROFILE DEBUG ===");
-      console.log("Token:", token);
-      console.log("UserId:", userId);
-      console.log("API URL:", `${endpoints.getUserProfile}/${userId}/`);
+    const token = await AsyncStorage.getItem("authToken");
+    const userId = await AsyncStorage.getItem("userId");
 
-      if (!token || !userId) {
-        Alert.alert("Error", "Please login again");
-        router.replace("/auth/login");
-        return;
-      }
-
-      const apiUrl = `${endpoints.getUserProfile}/${userId}/`;
-      console.log("Fetching from:", apiUrl);
-
-      const response = await fetch(apiUrl, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      console.log("Response Status:", response.status);
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("API Error Response:", errorText);
-        throw new Error(`Failed to load profile: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log("Profile Data:", data);
-      setUser(data);
-    } catch (error) {
-      console.error("Load profile error:", error);
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
-      Alert.alert("Profile Error", errorMessage);
-    } finally {
-      setLoading(false);
+    if (!token || !userId) {
+      Alert.alert("Error", "Please login again");
+      router.replace("/auth/login");
+      return;
     }
-  };
+
+    const apiUrl = `${endpoints.getUserProfile}/${userId}/`;
+
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to load profile");
+    }
+
+    const data = await response.json();
+    setUser(data);
+
+    // ✅ HEADER FIX (CRITICAL)
+    if (data.name) {
+      await AsyncStorage.setItem("userName", data.name);
+    }
+
+    if (data.photo) {
+      await AsyncStorage.setItem("userImage", data.photo);
+    } else {
+      await AsyncStorage.removeItem("userImage");
+    }
+
+  } catch (error) {
+    console.error(error);
+    Alert.alert("Error", "Unable to load profile");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleLogout = async () => {
     Alert.alert("Logout", "Are you sure you want to logout?", [
@@ -101,45 +103,48 @@ export default function ProfileScreen() {
     ]);
   };
 
-  const handleSaveProfile = async (updatedData: Partial<UserProfile>) => {
-    try {
-      const token = await AsyncStorage.getItem("authToken");
-      const userId = await AsyncStorage.getItem("userId");
+const handleSaveProfile = async (updatedData: Partial<UserProfile>) => {
+  try {
+    const token = await AsyncStorage.getItem("authToken");
+    const userId = await AsyncStorage.getItem("userId");
 
-      // Add trailing slash for Django - CRITICAL FIX
-      const apiUrl = `${endpoints.updateProfile}/${userId}/`;
-      console.log("=== UPDATE PROFILE DEBUG ===");
-      console.log("API URL:", apiUrl);
-      console.log("Update Data:", updatedData);
+    const apiUrl = `${endpoints.updateProfile}/${userId}/`;
 
-      const response = await fetch(apiUrl, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(updatedData),
-      });
+    const response = await fetch(apiUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(updatedData),
+    });
 
-      console.log("Response Status:", response.status);
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Update Error:", errorText);
-        throw new Error(`Failed to update profile: ${response.status}`);
-      }
-
-      const updatedUser = await response.json();
-      console.log("Updated User:", updatedUser);
-      setUser(updatedUser);
-      setEditModalVisible(false);
-      Alert.alert("Success", "Profile updated successfully!");
-    } catch (error) {
-      console.error("Update profile error:", error);
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
-      Alert.alert("Update Error", errorMessage);
+    if (!response.ok) {
+      throw new Error("Failed to update profile");
     }
-  };
+
+    const updatedUser = await response.json();
+    setUser(updatedUser);
+
+    // ✅ HEADER AUTO UPDATE
+    if (updatedUser.name) {
+      await AsyncStorage.setItem("userName", updatedUser.name);
+    }
+
+    if (updatedUser.photo) {
+      await AsyncStorage.setItem("userImage", updatedUser.photo);
+    } else {
+      await AsyncStorage.removeItem("userImage");
+    }
+
+    setEditModalVisible(false);
+    Alert.alert("Success", "Profile updated successfully");
+
+  } catch (error) {
+    Alert.alert("Error", "Profile update failed");
+  }
+};
+
 
   const menuItems = [
     {

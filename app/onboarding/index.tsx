@@ -35,7 +35,7 @@ export default function Onboarding() {
   const [index, setIndex] = useState(0);
 
   const onSkip = () => {
-    router.replace("/auth/login");
+    router.replace("/home");
   };
 
   return (

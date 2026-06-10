@@ -1,0 +1,17 @@
+Django>=5.0,<6.0
+djangorestframework
+django-cors-headers
+dj-database-url
+psycopg2-binary
+gunicorn
+PyPDF2
+PyMuPDF
+pillow
+pdf2docx
+pdfplumber
+reportlab
+camelot-py
+python-pptx
+pdf2image
+openpyxl
+mysqlclient
