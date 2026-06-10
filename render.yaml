@@ -2,6 +2,7 @@ services:
   - type: web
     name: django-files-backend
     runtime: python
+    plan: free
     buildCommand: cd DjangoBackend && pip install -r requirements.txt && python manage.py migrate
     startCommand: cd DjangoBackend && gunicorn myproject.wsgi:application
     envVars:
