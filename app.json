@@ -21,7 +21,11 @@
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png"
       },
-      "permissions": ["READ_EXTERNAL_STORAGE","WRITE_EXTERNAL_STORAGE","RECORD_AUDIO"],
+      "permissions": [
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "RECORD_AUDIO"
+      ],
       "package": "com.app.MobileApp"
     },
     "plugins": [
@@ -35,6 +39,13 @@
           "backgroundColor": "#ffffff"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "abfdd49d-2109-4ab3-ae28-4528d8401d65"
+      }
+    },
+    "owner": "sathya2346"
   }
 }
